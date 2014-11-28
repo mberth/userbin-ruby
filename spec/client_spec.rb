@@ -120,4 +120,9 @@ describe Userbin::Client do
   end
 
 
+  describe '#login' do
+    it 'works' do
+      subject.login 'the_user_id'
+    end
+  end
 end
