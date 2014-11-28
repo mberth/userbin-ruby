@@ -38,4 +38,25 @@ describe Userbin::Client do
     RequestStore.store[:userbin] = nil
   end
 
+  context 'with a valid session token' do
+    before(:each) do
+      attributes = {
+          mfa_enabled?: true,
+          device_trusted?: true,
+          mfa_in_progress?: false,
+          mfa_required?: true,
+          has_default_pairing?: true
+      }
+      subject.session_token = double('session_token', attributes)
+    end
+
+    it { is_expected.to be_authorized }
+    it { is_expected.to be_mfa_enabled }
+    it { is_expected.to be_device_trusted }
+    it { is_expected.not_to be_mfa_in_progress }
+    it { is_expected.to be_mfa_required }
+    it { is_expected.to have_default_pairing }
+
+  end
+
 end
