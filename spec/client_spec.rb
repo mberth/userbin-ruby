@@ -46,7 +46,8 @@ describe Userbin::Client do
           device_trusted?: true,
           mfa_in_progress?: false,
           mfa_required?: true,
-          has_default_pairing?: true
+          has_default_pairing?: true,
+          expired?: false
       }
       token_double = double('session_token', answers)
       store_double = double("token_store", session_token: token_double)
@@ -60,6 +61,12 @@ describe Userbin::Client do
     it { is_expected.to be_mfa_required }
     it { is_expected.to have_default_pairing }
 
+    describe '#authorize' do
+      it 'succeeds' do
+        expect {subject.authorize!}.not_to raise_error
+      end
+
+    end
   end
 
 end
