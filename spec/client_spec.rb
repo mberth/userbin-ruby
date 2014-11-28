@@ -1,5 +1,11 @@
 require 'spec_helper'
 
+def setup_session_token(answers)
+  token_double = double('session_token', answers)
+  store_double = double("token_store", session_token: token_double)
+  allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
+end
+
 describe Userbin::Client do
 
   subject do
@@ -49,9 +55,7 @@ describe Userbin::Client do
           has_default_pairing?: true,
           expired?: false
       }
-      token_double = double('session_token', answers)
-      store_double = double("token_store", session_token: token_double)
-      allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
+      setup_session_token(answers)
     end
 
     it { is_expected.to be_authorized }
@@ -71,7 +75,7 @@ describe Userbin::Client do
 
   context 'with an expired session token' do
     describe '#authorize' do
-      it 'sends a heartbeat' do
+      xit 'sends a heartbeat' do
         expect(Userbin::Monitoring).to receive(:heartbeat)
         subject.authorize!
       end
