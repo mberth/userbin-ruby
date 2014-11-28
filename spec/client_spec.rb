@@ -4,6 +4,7 @@ def setup_session_token(answers)
   token_double = double('session_token', answers)
   store_double = double("token_store", session_token: token_double)
   allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
+  token_double
 end
 
 def valid_session_token
@@ -126,7 +127,10 @@ describe Userbin::Client do
       allow(Userbin::User).to receive(:new).and_return(user_double)
       session_double = double('session', token: 'the token')
       allow(user_double).to receive_message_chain(:sessions, :create => session_double )
+      token = valid_session_token
+      setup_session_token token
       subject.login 'the_user_id'
+      expect(subject.session_token).to eql(token)
     end
   end
 end
