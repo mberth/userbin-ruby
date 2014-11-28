@@ -106,4 +106,17 @@ describe Userbin::Client do
 
   end
 
+  context 'with an untrusted device' do
+    before(:each) do
+      token = valid_session_token.merge device_trusted?: false
+      setup_session_token token
+    end
+
+    it 'raises ChallengeRequiredError' do
+      expect { subject.authorize! }.to raise_error(Userbin::ChallengeRequiredError)
+    end
+
+  end
+
+
 end
