@@ -2,8 +2,8 @@ require 'spec_helper'
 
 def setup_session_token(answers)
   token_double = double('session_token', answers)
-  store_double = double("token_store", session_token: token_double)
-  allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
+  @store_double = double("token_store", session_token: token_double)
+  allow(Userbin::TokenStore).to receive(:new).and_return(@store_double)
   token_double
 end
 
