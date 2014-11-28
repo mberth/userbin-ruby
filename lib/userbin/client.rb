@@ -45,7 +45,7 @@ module Userbin
     end
 
     def authorize!
-      unless @store.session_token
+      unless @store.session_token.valid?
         raise Userbin::UserUnauthorizedError,
           'Need to call login before authorize'
       end
@@ -66,7 +66,7 @@ module Userbin
     end
 
     def authorized?
-      !!@store.session_token
+      @store.session_token.valid?
     end
 
     def login(user_id, user_attrs = {})
@@ -84,7 +84,7 @@ module Userbin
     end
 
     def logout
-      return unless @store.session_token
+      return unless authorized?
 
       # Destroy the current session specified in the session token
       begin
@@ -97,7 +97,7 @@ module Userbin
     end
 
     def trust_device(attrs = {})
-      unless @store.session_token
+      unless authorized?
         raise Userbin::UserUnauthorizedError,
           'Need to call login before trusting device'
       end

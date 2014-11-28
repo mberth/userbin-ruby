@@ -35,6 +35,11 @@ module Userbin
     def mfa_required?
       @jwt.payload['vfy'] > 0
     end
+
+    # This is a real SessionToken, always return true.
+    def valid?
+      true
+    end
   end
 
   # A Null Object that serves as a placeholder for a token. Used when there is
@@ -67,6 +72,11 @@ module Userbin
     end
 
     def mfa_required?
+      false
+    end
+
+    # This is not a real SessionToken, always return false
+    def valid?
       false
     end
   end
