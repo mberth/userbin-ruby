@@ -48,7 +48,9 @@ describe Userbin::Client do
           mfa_required?: true,
           has_default_pairing?: true
       }
-      subject.session_token = double('session_token', attributes)
+      token_double = double('session_token', attributes)
+      store_double = double("token_store", session_token: token_double)
+      allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
     end
 
     it { is_expected.to be_authorized }
