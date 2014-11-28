@@ -82,7 +82,7 @@ module Userbin
           return @app.call(env) unless userbin
 
           # get the session token from our local store
-          if userbin.session_token
+          if userbin.session_token.valid?
             env[:request_headers]['X-Userbin-Session-Token'] =
               userbin.session_token.to_s
           end
