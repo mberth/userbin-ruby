@@ -6,6 +6,17 @@ def setup_session_token(answers)
   allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
 end
 
+def valid_session_token
+  {
+      mfa_enabled?: true,
+      device_trusted?: true,
+      mfa_in_progress?: false,
+      mfa_required?: true,
+      has_default_pairing?: true,
+      expired?: false
+  }
+end
+
 describe Userbin::Client do
 
   subject do
@@ -47,14 +58,7 @@ describe Userbin::Client do
 
   context 'with a valid session token' do
     before(:each) do
-      answers = {
-          mfa_enabled?: true,
-          device_trusted?: true,
-          mfa_in_progress?: false,
-          mfa_required?: true,
-          has_default_pairing?: true,
-          expired?: false
-      }
+      answers = valid_session_token
       setup_session_token(answers)
     end
 
