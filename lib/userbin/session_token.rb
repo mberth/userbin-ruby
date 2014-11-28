@@ -36,4 +36,38 @@ module Userbin
       @jwt.payload['vfy'] > 0
     end
   end
+
+  # A Null Object that serves as a placeholder for a token. Used when there is
+  # no real token yet (or anymore).
+  class NullToken
+
+    def to_s
+      "null token"
+    end
+
+    def expired?
+      # we don't want to refresh a NullToken
+      false
+    end
+
+    def device_trusted?
+      false
+    end
+
+    def has_default_pairing?
+      false
+    end
+
+    def mfa_enabled?
+      false
+    end
+
+    def mfa_in_progress?
+      false
+    end
+
+    def mfa_required?
+      false
+    end
+  end
 end

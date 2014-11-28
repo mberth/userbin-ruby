@@ -108,23 +108,23 @@ module Userbin
     end
 
     def mfa_enabled?
-      @store.session_token ? @store.session_token.mfa_enabled? : false
+      @store.session_token.mfa_enabled?
     end
 
     def device_trusted?
-      @store.session_token ? @store.session_token.device_trusted? : false
+      @store.session_token.device_trusted?
     end
 
     def mfa_in_progress?
-      @store.session_token ? @store.session_token.mfa_in_progress? : false
+      @store.session_token.mfa_in_progress?
     end
 
     def mfa_required?
-      @store.session_token ? @store.session_token.mfa_required? : false
+      @store.session_token.mfa_required?
     end
 
     def has_default_pairing?
-      @store.session_token ? @store.session_token.has_default_pairing? : false
+      @store.session_token.has_default_pairing?
     end
   end
 end

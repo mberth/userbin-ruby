@@ -6,7 +6,11 @@ module Userbin
 
     def session_token
       token = @cookies['_ubs']
-      Userbin::SessionToken.new(token) if token
+      if token
+        Userbin::SessionToken.new(token)
+      else
+        Userbin::NullToken.new
+      end
     end
 
     def session_token=(value)
