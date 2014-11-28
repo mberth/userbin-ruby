@@ -4,7 +4,8 @@ describe Userbin::Client do
 
   subject do
     dummy_request = double('request', ip: '1.1.2.3', user_agent: 'IE 1.0', cookies: {})
-    Userbin::Client.new(dummy_request, nil)
+    @response = Rack::Response.new
+    Userbin::Client.new(dummy_request, @response)
   end
 
   context 'without session token' do
