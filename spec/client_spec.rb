@@ -138,9 +138,18 @@ describe Userbin::Client do
   end
 
   describe '#logout' do
-    it 'destroys the session' do
+    before(:each) do
       setup_session_token valid_session_token
+    end
+
+    it 'destroys the session' do
       expect(subject).to receive_message_chain(:sessions, :destroy).with('$current')
+      @store_double.as_null_object
+      subject.logout
+    end
+
+    it 'resets the session token' do
+      expect(subject).to receive(:sessions).and_return double().as_null_object
       expect(@store_double).to receive(:session_token=).with(nil)
       subject.logout
     end
