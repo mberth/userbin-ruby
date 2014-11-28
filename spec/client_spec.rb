@@ -76,6 +76,16 @@ describe Userbin::Client do
       end
 
     end
+
+    describe '#trust_device' do
+      it 'stores the trusted device token' do
+        device_double = double('device', :token => 'the_device_token')
+        allow(subject).to receive_message_chain(:trusted_devices, :create => device_double)
+        expect(@store_double).to receive(:trusted_device_token=).with('the_device_token')
+        subject.trust_device
+      end
+    end
+
   end
 
   context 'with an expired session token' do
