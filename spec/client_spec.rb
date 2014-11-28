@@ -74,8 +74,20 @@ describe Userbin::Client do
   end
 
   context 'with an expired session token' do
+    before(:each) do
+      answers = {
+          mfa_enabled?: true,
+          device_trusted?: true,
+          mfa_in_progress?: false,
+          mfa_required?: true,
+          has_default_pairing?: true,
+          expired?: true
+      }
+      setup_session_token(answers)
+    end
+
     describe '#authorize' do
-      xit 'sends a heartbeat' do
+      it 'sends a heartbeat' do
         expect(Userbin::Monitoring).to receive(:heartbeat)
         subject.authorize!
       end
