@@ -139,7 +139,7 @@ describe Userbin::Client do
       session_double = double('session', token: 'the new token')
       allow(user_double).to receive_message_chain(:sessions, :create => session_double )
       token = setup_session_token valid_session_token
-      expect(@store_double).to receive(:session_token=).with(nil).ordered
+      expect(@store_double).to receive(:clear_session_token).ordered
       expect(@store_double).to receive(:session_token=).with('the new token').ordered
       expect(@store_double).to receive(:trusted_device_token)
       subject.login 'the_user_id'
@@ -159,9 +159,9 @@ describe Userbin::Client do
       subject.logout
     end
 
-    it 'resets the session token' do
+    it 'clears the session token' do
       expect(subject).to receive(:sessions).and_return double().as_null_object
-      expect(@store_double).to receive(:session_token=).with(nil)
+      expect(@store_double).to receive(:clear_session_token)
       subject.logout
     end
   end

@@ -45,7 +45,7 @@ module Userbin
     end
 
     def authorize!
-      unless @store.session_token.valid?
+      unless authorized?
         raise Userbin::UserUnauthorizedError,
           'Need to call login before authorize'
       end
@@ -70,8 +70,7 @@ module Userbin
     end
 
     def login(user_id, user_attrs = {})
-      # Clear the session token if any
-      @store.session_token = nil
+      @store.clear_session_token
 
       user = Userbin::User.new(user_id.to_s)
       session = user.sessions.create(
@@ -92,8 +91,7 @@ module Userbin
       rescue Userbin::ApiError # ignored
       end
 
-      # Clear the session token
-      @store.session_token = nil
+      @store.clear_session_token
     end
 
     def trust_device(attrs = {})

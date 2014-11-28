@@ -13,6 +13,11 @@ module Userbin
       end
     end
 
+    # Clear the session token if any
+    def clear_session_token
+      self.session_token = nil
+    end
+
     def session_token=(value)
       @cookies['_ubs'] = value
 
