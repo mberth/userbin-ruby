@@ -70,7 +70,13 @@ describe Userbin::Client do
   end
 
   context 'with an expired session token' do
-    pending
+    describe '#authorize' do
+      it 'sends a heartbeat' do
+        expect(Userbin::Monitoring).to receive(:heartbeat)
+        subject.authorize!
+      end
+
+    end
   end
 
 end
