@@ -28,7 +28,7 @@ describe Userbin::Client do
   end
 
   context 'without session token' do
-    it { is_expected.not_to be_authorized }
+    it { is_expected.not_to be_logged_in }
     it { is_expected.not_to be_mfa_enabled }
     it { is_expected.not_to be_device_trusted }
     it { is_expected.not_to be_mfa_in_progress }
@@ -64,7 +64,7 @@ describe Userbin::Client do
       setup_session_token(answers)
     end
 
-    it { is_expected.to be_authorized }
+    it { is_expected.to be_logged_in }
     it { is_expected.to be_mfa_enabled }
     it { is_expected.to be_device_trusted }
     it { is_expected.not_to be_mfa_in_progress }
