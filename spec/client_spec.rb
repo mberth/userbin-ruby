@@ -69,4 +69,8 @@ describe Userbin::Client do
     end
   end
 
+  context 'with an expired session token' do
+    pending
+  end
+
 end
