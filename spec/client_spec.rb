@@ -14,7 +14,8 @@ def valid_session_token
       mfa_in_progress?: false,
       mfa_required?: true,
       has_default_pairing?: true,
-      expired?: false
+      expired?: false,
+      valid?: true
   }
 end
 
