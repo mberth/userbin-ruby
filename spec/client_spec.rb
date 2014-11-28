@@ -41,14 +41,14 @@ describe Userbin::Client do
 
   context 'with a valid session token' do
     before(:each) do
-      attributes = {
+      answers = {
           mfa_enabled?: true,
           device_trusted?: true,
           mfa_in_progress?: false,
           mfa_required?: true,
           has_default_pairing?: true
       }
-      token_double = double('session_token', attributes)
+      token_double = double('session_token', answers)
       store_double = double("token_store", session_token: token_double)
       allow(Userbin::TokenStore).to receive(:new).and_return(store_double)
     end
