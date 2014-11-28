@@ -79,15 +79,8 @@ describe Userbin::Client do
 
   context 'with an expired session token' do
     before(:each) do
-      answers = {
-          mfa_enabled?: true,
-          device_trusted?: true,
-          mfa_in_progress?: false,
-          mfa_required?: true,
-          has_default_pairing?: true,
-          expired?: true
-      }
-      setup_session_token(answers)
+      token = valid_session_token.merge expired?: true
+      setup_session_token token
     end
 
     describe '#authorize' do
