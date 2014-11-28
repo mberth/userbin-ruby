@@ -122,15 +122,18 @@ describe Userbin::Client do
 
 
   describe '#login' do
-    it 'works' do
+    it 'stores the new session token' do
       user_double = double('user')
       allow(Userbin::User).to receive(:new).and_return(user_double)
-      session_double = double('session', token: 'the token')
+      session_double = double('session', token: 'the new token')
       allow(user_double).to receive_message_chain(:sessions, :create => session_double )
-      token = valid_session_token
-      setup_session_token token
+      token = setup_session_token valid_session_token
+      expect(@store_double).to receive(:session_token=).with(nil).ordered
+      expect(@store_double).to receive(:session_token=).with('the new token').ordered
+      expect(@store_double).to receive(:trusted_device_token)
       subject.login 'the_user_id'
       expect(subject.session_token).to eql(token)
     end
+
   end
 end
