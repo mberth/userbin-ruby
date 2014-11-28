@@ -96,14 +96,14 @@ describe Userbin::Client do
       token = valid_session_token.merge mfa_in_progress?: true
       setup_session_token token
     end
-
-    it 'forces a logout' do
-      expect(subject).to receive(:logout)
-      expect { subject.authorize! }.to raise_error(
-                                           Userbin::UserUnauthorizedError,
-                                           /unverified/)
+    describe '#authorize' do
+      it 'forces a logout' do
+        expect(subject).to receive(:logout)
+        expect { subject.authorize! }.to raise_error(
+                                             Userbin::UserUnauthorizedError,
+                                             /unverified/)
+      end
     end
-
   end
 
   context 'with an untrusted device' do
@@ -112,10 +112,11 @@ describe Userbin::Client do
       setup_session_token token
     end
 
-    it 'raises ChallengeRequiredError' do
-      expect { subject.authorize! }.to raise_error(Userbin::ChallengeRequiredError)
+    describe '#authorize' do
+      it 'raises ChallengeRequiredError' do
+        expect { subject.authorize! }.to raise_error(Userbin::ChallengeRequiredError)
+      end
     end
-
   end
 
 
