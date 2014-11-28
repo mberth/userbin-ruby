@@ -88,8 +88,22 @@ describe Userbin::Client do
         expect(Userbin::Monitoring).to receive(:heartbeat)
         subject.authorize!
       end
-
     end
+  end
+
+  context 'with MFA in progress' do
+    before(:each) do
+      token = valid_session_token.merge mfa_in_progress?: true
+      setup_session_token token
+    end
+
+    it 'forces a logout' do
+      expect(subject).to receive(:logout)
+      expect { subject.authorize! }.to raise_error(
+                                           Userbin::UserUnauthorizedError,
+                                           /unverified/)
+    end
+
   end
 
 end
