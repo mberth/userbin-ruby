@@ -71,7 +71,7 @@ describe Userbin::Client do
     it { is_expected.to be_mfa_required }
     it { is_expected.to have_default_pairing }
 
-    describe '#authorize' do
+    describe '#authorize!' do
       it 'succeeds' do
         expect {subject.authorize!}.not_to raise_error
       end
@@ -95,7 +95,7 @@ describe Userbin::Client do
       setup_session_token token
     end
 
-    describe '#authorize' do
+    describe '#authorize!' do
       it 'sends a heartbeat' do
         expect(Userbin::Monitoring).to receive(:heartbeat)
         subject.authorize!
@@ -108,7 +108,7 @@ describe Userbin::Client do
       token = valid_session_token.merge mfa_in_progress?: true
       setup_session_token token
     end
-    describe '#authorize' do
+    describe '#authorize!' do
       it 'forces a logout' do
         expect(subject).to receive(:logout)
         expect { subject.authorize! }.to raise_error(
@@ -124,7 +124,7 @@ describe Userbin::Client do
       setup_session_token token
     end
 
-    describe '#authorize' do
+    describe '#authorize!' do
       it 'raises ChallengeRequiredError' do
         expect { subject.authorize! }.to raise_error(Userbin::ChallengeRequiredError)
       end
