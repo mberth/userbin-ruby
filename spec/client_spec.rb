@@ -122,6 +122,10 @@ describe Userbin::Client do
 
   describe '#login' do
     it 'works' do
+      user_double = double('user')
+      allow(Userbin::User).to receive(:new).and_return(user_double)
+      session_double = double('session', token: 'the token')
+      allow(user_double).to receive_message_chain(:sessions, :create => session_double )
       subject.login 'the_user_id'
     end
   end
