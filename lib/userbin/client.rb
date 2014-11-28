@@ -50,7 +50,7 @@ module Userbin
           'Need to call login before authorize'
       end
 
-      if @store.session_token.expired?
+      if session_token.expired?
         Userbin::Monitoring.heartbeat
       end
 
@@ -66,7 +66,7 @@ module Userbin
     end
 
     def authorized?
-      @store.session_token.valid?
+      session_token.valid?
     end
 
     def login(user_id, user_attrs = {})
@@ -77,7 +77,7 @@ module Userbin
         user: user_attrs, trusted_device_token: @store.trusted_device_token)
 
       # Set the session token for use in all subsequent requests
-      @store.session_token = session.token
+      self.session_token = session.token
 
       session
     end
@@ -106,23 +106,23 @@ module Userbin
     end
 
     def mfa_enabled?
-      @store.session_token.mfa_enabled?
+      session_token.mfa_enabled?
     end
 
     def device_trusted?
-      @store.session_token.device_trusted?
+      session_token.device_trusted?
     end
 
     def mfa_in_progress?
-      @store.session_token.mfa_in_progress?
+      session_token.mfa_in_progress?
     end
 
     def mfa_required?
-      @store.session_token.mfa_required?
+      session_token.mfa_required?
     end
 
     def has_default_pairing?
-      @store.session_token.has_default_pairing?
+      session_token.has_default_pairing?
     end
   end
 end
