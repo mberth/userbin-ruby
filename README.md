@@ -137,7 +137,7 @@ Using two-factor authentication involves two steps: **pairing** and **authentica
 
 ### Pairing
 
-Before your users can protect their account with two-factor authentication, they will need to pair their their preferred way of authenticating. The [Pairing API](https://api.userbin.com/#pairings) lets users add, verify, and remove authentication channels. Only *verified* pairings are valid for authentication.
+Before your users can protect their account with two-factor authentication, they will need to pair their preferred way of authenticating. The [Pairing API](https://api.userbin.com/#pairings) lets users add, verify, and remove authentication channels. Only *verified* pairings are valid for authentication.
 
 #### Pairing with Google Authenticator
 
